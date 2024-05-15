@@ -1,9 +1,20 @@
 version: '3'
 services:
   chatgpt-telegram-bot:
+    container_name: Mini_Helena_v2
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
       - .:/app
     restart: unless-stopped
+
+
+# version: '3'
+# services:
+#   chatgpt-telegram-bot:
+#     container_name: Mini_Helena_v2
+#     image: n3d1117/chatgpt-telegram-bot
+#     volumes:
+#       - .:/app
+#     restart: unless-stopped

@@ -14,6 +14,11 @@ from plugins.deepl import DeeplTranslatePlugin
 from plugins.worldtimeapi import WorldTimeApiPlugin
 from plugins.whois_ import WhoisPlugin
 from plugins.webshot import WebshotPlugin
+from plugins.wikipedia import WikipediaPlugin
+#from plugins.github import GithubPlugin
+from plugins.imgflip import ImgflipPlugin
+from plugins.smmry import SmmryPlugin
+
 
 
 class PluginManager:
@@ -38,6 +43,10 @@ class PluginManager:
             'gtts_text_to_speech': GTTSTextToSpeech,
             'whois': WhoisPlugin,
             'webshot': WebshotPlugin,
+            'wikipedia': WikipediaPlugin,
+            'imgflip': ImgflipPlugin,
+            'smmry': SmmryPlugin,
+            #'github': GithubPlugin,
         }
         self.plugins = [plugin_mapping[plugin]() for plugin in enabled_plugins if plugin in plugin_mapping]
 

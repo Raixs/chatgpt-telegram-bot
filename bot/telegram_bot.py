@@ -185,6 +185,7 @@ class ChatGPTTelegramBot:
 
         await self.prompt(update=update, context=context)
 
+
     async def reset(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """
         Resets the conversation.
@@ -196,15 +197,25 @@ class ChatGPTTelegramBot:
             return
 
         logging.info(f'Resetting the conversation for user {update.message.from_user.name} '
-                     f'(id: {update.message.from_user.id})...')
+                    f'(id: {update.message.from_user.id})...')
 
         chat_id = update.effective_chat.id
         reset_content = message_text(update.message)
-        self.openai.reset_chat_history(chat_id=chat_id, content=reset_content)
+        
+        # Obtener el nombre completo del usuario
+        user = update.message.from_user
+        user_name = user.first_name
+        if user.last_name:
+            user_name += f" {user.last_name}"
+
+        # Llamar a reset_chat_history con el nombre del usuario
+        self.openai.reset_chat_history(chat_id=chat_id, user_name=user_name, content=reset_content)
+
         await update.effective_message.reply_text(
             message_thread_id=get_thread_id(update),
             text=localized_text('reset_done', self.config['bot_language'])
         )
+
 
     async def image(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """

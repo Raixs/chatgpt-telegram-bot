@@ -348,13 +348,19 @@ class OpenAIHelper:
             logging.exception(e)
             raise Exception(f"⚠️ _{localized_text('error', self.config['bot_language'])}._ ⚠️\n{str(e)}") from e
 
-    def reset_chat_history(self, chat_id, content=''):
+    def reset_chat_history(self, chat_id, user_name='', content=''):
         """
         Resets the conversation history.
         """
         if content == '':
             content = self.config['assistant_prompt']
+
+        # Añadir el nombre del usuario al mensaje del sistema
+        if user_name:
+            content = f"{content} El usuario se llama {user_name}."
+            
         self.conversations[chat_id] = [{"role": "system", "content": content}]
+
 
     def __max_age_reached(self, chat_id) -> bool:
         """
